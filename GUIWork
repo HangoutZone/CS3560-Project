@@ -1,0 +1,124 @@
+package sample;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+
+        Label lab = new Label("Terrell's Tesla Dealership");
+        Label lab2 = new Label("Please sign in to access your account.");
+        Label lab3 = new Label("Username:");
+        Label lab4 = new Label("Password:");
+        Button b1 = new Button("login");
+        Label wrong = new Label("");
+
+        TextField t1 = new TextField();
+        TextField t2 = new TextField();
+
+        BorderPane bp = new BorderPane();
+        GridPane gp = new GridPane();
+
+        HBox h1 = new HBox(lab);
+        h1.setPadding(new Insets(10));
+        h1.setAlignment(Pos.TOP_CENTER);
+
+        bp.setTop(h1);
+
+        HBox h2 = new HBox(lab2);
+        HBox h4 = new HBox(20, b1, wrong);
+        h4.setSpacing(20);
+        h4.setAlignment(Pos.CENTER);
+
+
+        gp.addRow(0, lab3, t1);
+        gp.addRow(1, lab4, t2);
+        gp.setVgap(10);
+        gp.setHgap(10);
+
+        HBox h3 = new HBox(gp);
+
+        VBox v = new VBox(h2,h3, h4);
+        v.setAlignment(Pos.BASELINE_CENTER);
+        v.setPadding(new Insets(10));
+        v.setSpacing(30);
+        bp.setCenter(v);
+
+        Label choices = new Label("Welcome, please select from the options provided:");
+
+        Label t = new Label("Trim");
+        ChoiceBox<String> trimChoice = new ChoiceBox<>();
+        trimChoice.getItems().addAll("Long Range", "Long Range Plus", "Performance");
+
+        Label ma = new Label("Make");
+        ChoiceBox<String> makeChoice = new ChoiceBox<>();
+        makeChoice.getItems().addAll("Tesla");
+
+        Label mo = new Label("Model");
+        ChoiceBox<String> modelChoice = new ChoiceBox<>();
+        modelChoice.getItems().addAll("S", "3", "X", "Y");
+
+        Label y = new Label("Year");
+        ChoiceBox<String> yearChoice = new ChoiceBox<>();
+        yearChoice.getItems().addAll("2018", "2019", "2020");
+
+        Label c = new Label("Color");
+        ChoiceBox<String> colorChoice = new ChoiceBox<>();
+        colorChoice.getItems().addAll("Black", "White", "Blue", "Red");
+
+
+        HBox hBox1 = new HBox(10, ma, makeChoice, mo, modelChoice, y, yearChoice, c, colorChoice, t, trimChoice);
+
+        hBox1.setAlignment(Pos.CENTER);
+        HBox hBox2 = new HBox(choices);
+
+        Button b2 = new Button("logout");
+        b2.setOnAction(e -> {
+            System.exit(0);
+        });
+
+        Button b3 = new Button(" Order");
+        b3.setOnAction(e -> {
+
+        });
+
+        HBox hBox3 = new HBox(20,b2, b3);
+        hBox3.setAlignment(Pos.CENTER);
+        hBox3.setSpacing(50);
+        hBox3.setPadding(new Insets(60));
+        VBox vBox = new VBox(70, hBox2, hBox1, hBox3);
+
+        b1.setOnAction(e -> {
+            if(t1.getText().equals("Tman") && t2.getText().equals("fast"))
+            {
+                bp.setCenter(vBox);
+            }
+            else
+            {
+                 wrong.setText("Sorry, invalid information entered");
+            }
+        });
+
+        Scene s = new Scene(bp, 600, 600);
+        primaryStage.setScene(s);
+        primaryStage.show();
+    }
+
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
